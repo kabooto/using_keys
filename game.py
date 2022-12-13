@@ -42,16 +42,16 @@ def player():
 
 def new_ball_moves():
     global x1, y1, speed_x, speed_y
-    if x1 == 495:
+    if x1 > 495:
         speed_x = -5
         speed_y = rint(-5, 6)
-    if x1 == 5:
+    if x1 < 5:
         speed_x = 5
         speed_y = rint(-5, 6)
-    if y1 == 495:
+    if y1 > 495:
         speed_y = -5
         speed_x = rint(-5, 6)
-    if y1 == 5:
+    if y1 < 5:
         speed_y = 5
         speed_x = rint(-5, 6)
     x1 += speed_x
@@ -59,16 +59,12 @@ def new_ball_moves():
     dr.circle(screen, 'White', (x1, y1), 10)
 
 
-def ball_appear():
-    pass
-
-
 FPS = 20
 size = [500, 500]
 screen = pg.display.set_mode(size)
 
 x, y = 250, 250
-x1, y1 = 250, 250
+x1, y1 = 300, 250
 speed_x, speed_y = 5, 0
 finished = False
 
@@ -80,5 +76,5 @@ while not finished:
         esc_exit()
     player()
     new_ball_moves()
-    ball_appear()
+
     pg.display.update()
