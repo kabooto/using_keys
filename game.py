@@ -42,8 +42,8 @@ class Player:
 
 
 class NPC:
-    def __init__(self,screen):
-        self.x, self.y = 250, 5
+    def __init__(self, screen):
+        self.x, self.y = 270, 5
         self.size = 10
         dr.circle(screen, 'White', (self.x, self.y), self.size)
         self.speed_x = 0
@@ -67,7 +67,8 @@ class NPC:
         dr.circle(screen, 'White', (self.x, self.y), self.size)
 
     def collision(self):
-        pass
+        self.speed_x = -self.speed_x
+        self.speed_y = -self.speed_y
 
 
 def main():
@@ -87,6 +88,9 @@ def main():
             esc_exit(finished, event)
         player.moves(screen)
         npc.moves(screen)
+        if abs(player.x - npc.x) < 11 and abs(player.y - npc.y) < 11:
+            npc.collision()
         pg.display.update()
+
 
 main()
