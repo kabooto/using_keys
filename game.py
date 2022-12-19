@@ -81,15 +81,17 @@ def main():
     pg.display.update()
     clock = pg.time.Clock()
     player = Player(screen)
-    npc = NPC(screen)
+    npc = [NPC(screen)]
     while not finished:
         clock.tick(FPS)
         for event in pg.event.get():
             esc_exit(finished, event)
         player.moves(screen)
-        npc.moves(screen)
-        if abs(player.x - npc.x) < 11 and abs(player.y - npc.y) < 11:
-            npc.collision()
+        for i in npc:
+            i.moves(screen)
+            if abs(player.x - i.x) < 11 and abs(player.y - i.y) < 11:
+                i.collision()
+                npc.append(NPC(screen))
         pg.display.update()
 
 
