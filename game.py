@@ -7,7 +7,8 @@ pg.init()
 
 def esc_exit(finished, event):
     """
-    exit game by escape pressing
+    :param finished: Variable close the game
+    :param event: Variable for game processes
     :return: None
     """
     if event.type == pg.KEYDOWN:
@@ -17,14 +18,20 @@ def esc_exit(finished, event):
 
 
 class Player:
-
-    def __init__(self, screen):
-        self.x, self.y = 250, 250
+    """
+    Class for controlling ball
+    """
+    def __init__(self):
+        self.x, self.y = 250, 250  # Start position
         self.size = 10
-        dr.circle(screen, 'Red', (self.x, self.y), self.size)
 
     def moves(self, screen):
-        self.pers_speed = 5
+        """
+        move player method
+        :param screen: variable to work on screen
+        :return: None
+        """
+        self.pers_speed = 5  # player speed
         self.keys = pg.key.get_pressed()
         if self.keys[pg.K_LEFT]:
             self.x -= self.pers_speed
@@ -42,31 +49,43 @@ class Player:
 
 
 class NPC:
-    def __init__(self, screen):
+    """
+    Class for not control ball
+    """
+    def __init__(self):
         self.x, self.y = 270, 5
         self.size = 10
-        dr.circle(screen, 'White', (self.x, self.y), self.size)
+        self.color = (randint(0, 255), randint(0, 255), randint(0, 255))
         self.speed_x = 0
         self.speed_y = 5
 
     def moves(self, screen):
-        if self.x > 495:
+        """
+        Move NPC method
+        :param screen: variable to work on screen
+        :return:
+        """
+        if self.x > 495:  # Right wall
             self.speed_x = -5
             self.speed_y = randint(-5, 6)
         if self.x < 5:
-            self.speed_x = 5
+            self.speed_x = 5  # Left wall
             self.speed_y = randint(-5, 6)
-        if self.y > 495:
+        if self.y > 495:  # Bottom
             self.speed_y = -5
             self.speed_x = randint(-5, 6)
-        if self.y < 5:
+        if self.y < 5:  # Top
             self.speed_y = 5
             self.speed_x = randint(-5, 6)
         self.x += self.speed_x
         self.y += self.speed_y
-        dr.circle(screen, 'White', (self.x, self.y), self.size)
+        dr.circle(screen, self.color, (self.x, self.y), self.size)
 
     def collision(self):
+        """
+        Method for collisions with Player
+        :return: None
+        """
         self.speed_x = -self.speed_x
         self.speed_y = -self.speed_y
 
@@ -80,8 +99,8 @@ def main():
 
     pg.display.update()
     clock = pg.time.Clock()
-    player = Player(screen)
-    npc = [NPC(screen)]
+    player = Player()
+    npc = [NPC()]
     while not finished:
         clock.tick(FPS)
         for event in pg.event.get():
@@ -91,7 +110,7 @@ def main():
             i.moves(screen)
             if abs(player.x - i.x) < 11 and abs(player.y - i.y) < 11:
                 i.collision()
-                npc.append(NPC(screen))
+                npc.append(NPC())
         pg.display.update()
 
 
