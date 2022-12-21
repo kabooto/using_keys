@@ -17,13 +17,18 @@ def esc_exit(finished, event):
             exit()
 
 
-class Player:
+class Object:
+    def __init__(self):
+        self.x, self.y, self.size = 250, 250, 10
+        self.speed = 5  # Object speed
+
+
+class Player(Object):
     """
     Class for controlling ball
     """
     def __init__(self):
-        self.x, self.y = 250, 250  # Start position
-        self.size = 10
+        super().__init__()
 
     def moves(self, screen):
         """
@@ -31,16 +36,15 @@ class Player:
         :param screen: variable to work on screen
         :return: None
         """
-        self.pers_speed = 5  # player speed
         self.keys = pg.key.get_pressed()
         if self.keys[pg.K_LEFT]:
-            self.x -= self.pers_speed
+            self.x -= self.speed
         if self.keys[pg.K_RIGHT]:
-            self.x += self.pers_speed
+            self.x += self.speed
         if self.keys[pg.K_UP]:
-            self.y -= self.pers_speed
+            self.y -= self.speed
         if self.keys[pg.K_DOWN]:
-            self.y += self.pers_speed
+            self.y += self.speed
         screen.fill('Black')
         dr.circle(screen, 'Red', (self.x, self.y), self.size)
 
@@ -48,16 +52,17 @@ class Player:
         pass
 
 
-class NPC:
+class NPC(Object):
     """
     Class for not control ball
     """
     def __init__(self):
-        self.x, self.y = 270, 5
-        self.size = 10
+        super().__init__()
+        self.y += 12
+        self.x += 12
         self.color = (randint(0, 255), randint(0, 255), randint(0, 255))
-        self.speed_x = 0
-        self.speed_y = 5
+        self.speed_x = self.speed
+        self.speed_y = self.speed
 
     def moves(self, screen):
         """
