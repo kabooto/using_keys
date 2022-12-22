@@ -27,8 +27,6 @@ class Player(Object):
     """
     Class for controlling ball
     """
-    def __init__(self):
-        super().__init__()
 
     def moves(self, screen):
         """
@@ -45,8 +43,19 @@ class Player(Object):
             self.y -= self.speed
         if self.keys[pg.K_DOWN]:
             self.y += self.speed
+
+        # If Player ball coming to screen frame:
+        if self.x < 5:
+            self.x = 495
+        if self.x > 495:
+            self.x = 5
+        if self.y < 5:
+            self.y = 495
+        if self.y > 495:
+            self.y = 5
+
         screen.fill('Black')
-        dr.circle(screen, 'Red', (self.x, self.y), self.size)
+        dr.circle(screen, 'Red', (self.x, self.y), self.size)  # Drawing player ball
 
     def collision(self):
         pass
