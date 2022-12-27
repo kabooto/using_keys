@@ -1,5 +1,6 @@
 import pygame as pg
 import pygame.draw as dr
+import pygame.mouse as mouse
 from random import randint
 
 pg.init()
@@ -23,7 +24,7 @@ class Object:
         self.speed = 5  # Object speed
 
 
-class Player(Object):
+class Keys_player(Object):
     """
     Class for controlling ball
     """
@@ -59,6 +60,14 @@ class Player(Object):
 
     def collision(self):
         pass
+
+
+class Mouse_player():
+
+    def moves(self, screen):
+        self.x, self.y = mouse.get_pos()[0], mouse.get_pos()[1]
+        dr.circle(screen, 'Yellow', (self.x, self.y), 20)
+        mouse.set_visible(False)
 
 
 class NPC(Object):
@@ -113,13 +122,15 @@ def main():
 
     pg.display.update()
     clock = pg.time.Clock()
-    player = Player()
+    player = Keys_player()
+    mouse_player = Mouse_player()
     npc = [NPC()]
     while not finished:
         clock.tick(FPS)
         for event in pg.event.get():
             esc_exit(finished, event)
         player.moves(screen)
+        mouse_player.moves(screen)
         for i in npc:
             i.moves(screen)
             if abs(player.x - i.x) < 11 and abs(player.y - i.y) < 11:
