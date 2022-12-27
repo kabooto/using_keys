@@ -19,6 +19,9 @@ def esc_exit(finished, event):
 
 
 class Object:
+    """
+    Master class for player which control by keys and NPCs
+    """
     def __init__(self):
         self.x, self.y, self.size = 250, 250, 10
         self.speed = 5  # Object speed
@@ -26,7 +29,7 @@ class Object:
 
 class Keys_player(Object):
     """
-    Class for controlling ball
+    Class for controlling ball by keys
     """
 
     def moves(self, screen):
@@ -63,6 +66,9 @@ class Keys_player(Object):
 
 
 class Mouse_player():
+    """
+    Class to control ball by mouse
+    """
 
     def moves(self, screen):
         self.x, self.y = mouse.get_pos()[0], mouse.get_pos()[1]
@@ -72,7 +78,7 @@ class Mouse_player():
 
 class NPC(Object):
     """
-    Class for not control ball
+    Class for Not Personal Control object
     """
     def __init__(self):
         super().__init__()
